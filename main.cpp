@@ -32,10 +32,34 @@ void construct(int ** mtx, int init, size_t rows, size_t cols)
 {
   for (size_t i = 0; i < rows; ++i)
   {
-    for (size_t j = 0; j < rows; ++j)
+    for (size_t j = 0; j < cols; ++j)
     {
       mtx[i][j] = init;
     }
+  }
+}
+
+void input(int ** mtx, size_t rows, size_t cols)
+{
+  for (size_t i = 0; i < rows; ++i)
+  {
+    for (size_t j = 0; j < cols; ++j)
+    {
+      std::cin >> mtx[i][j];
+    }
+  }
+}
+
+void output(int ** mtx, size_t rows, size_t cols)
+{
+  for (size_t i = 0; i < rows; ++i)
+  {
+    std::cout << mtx[i][0];
+    for (size_t j = 1; j < cols; ++j)
+    {
+      std::cout << " " << mtx[i][j];
+    }
+    std::cout << "\n";
   }
 }
 
@@ -59,8 +83,15 @@ int main() {
     std::cerr << e.what() << '\n';
   }
   
-  construct(matrix, 2, rows, cols);
-  std::cout << matrix[0][0] << '\n';
-  destroy(matrix, 5);
+  construct(matrix, 0, rows, cols);
+  input(matrix, rows, cols);
+  if (!std::cin)
+  {
+    destroy(matrix, cols);
+    std::cerr << "input error\n";
+    return 1;
+  }
+  output(matrix, rows, cols);
+  destroy(matrix, cols);
   
 }
