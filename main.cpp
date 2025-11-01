@@ -63,6 +63,47 @@ void output(int ** mtx, size_t rows, size_t cols)
   }
 }
 
+
+int ** create_2(size_t rows, const size_t * lns)
+{
+  int ** mtx = new int * [rows];
+  size_t created = 0;
+  try
+  {
+    for(; created < rows; ++created)
+    {
+      mtx[created] = new int[*lns];
+      lns++;
+    }
+  }
+  catch (const std::bad_alloc & e)
+  {
+    destroy(mtx, created);
+    throw;
+  }
+  return mtx;
+}
+
+int ** convert(const int * t, size_t n, const size_t * lns, size_t rows)
+{
+  int ** matrix = create_2(rows, lns);
+  {
+    for (size_t j = 0; j < rows; ++j)
+    {
+      for (size_t i = 0; i < *lns; ++i)
+      {
+        matrix[j][i] = *t;
+        ++t;
+      }
+    ++lns;
+    }
+  }
+  return matrix;
+}
+
+
+
+
 int main() {
   int ** matrix = nullptr;
   size_t rows = 0;
