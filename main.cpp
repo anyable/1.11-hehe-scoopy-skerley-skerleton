@@ -28,8 +28,28 @@ int ** create(size_t rows, size_t cols)
   return mtx;
 }
 
+void construct(int ** mtx, int init, size_t rows, size_t cols)
+{
+  for (size_t i = 0; i < rows; ++i)
+  {
+    for (size_t j = 0; j < rows; ++j)
+    {
+      mtx[i][j] = init;
+    }
+  }
+}
+
 int main() {
   int ** matrix = nullptr;
+  size_t rows = 0;
+  size_t cols = 0;
+  std::cin >> rows >> cols;
+  if (!std::cin)
+  {
+    std::cerr << "bad input\n";
+
+    return 2;
+  }
   try
   {
     matrix = create(5, 5);
@@ -38,6 +58,9 @@ int main() {
   {
     std::cerr << e.what() << '\n';
   }
+  
+  construct(matrix, 2, rows, cols);
+  std::cout << matrix[0][0] << '\n';
   destroy(matrix, 5);
   
 }
